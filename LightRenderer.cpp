@@ -48,4 +48,45 @@ void LightRenderer::draw() {
 	glUseProgram(this->program);
 
 	GLint modelLoc = glGetUniformLocation(program, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glm::mat4 view = camera->getViewMatrix();
+	GLint vLoc = glGetUniformLocation(program, "view");
+	glUniformMatrix4fv(vLoc, 1, GL_FALSE, glm::value_ptr(view));
+
+	glm::mat4 proj = camera->getProjectionMatrix();
+	GLint pLoc = glGetUniformLocation(program, "projection");
+	glUniformMatrix4fv(pLoc, 1, GL_FALSE, glm::value_ptr(proj));
+
+	glBindVertexArray(vao);
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+
+	glBindVertexArray(0);
+	glUseProgram(0);
 }
+
+LightRenderer::~LightRenderer() {
+
+}
+
+void LightRenderer::setPosition(glm::vec3 _position) {
+	position = _position;
+}
+
+void LightRenderer::setColor(glm::vec3 _color) {
+	this->color = _color;
+}
+
+void LightRenderer::setProgram(GLuint _program) {
+	this->program = _program;
+}
+
+glm::vec3 LightRenderer::getPosition() {
+	return position;
+}
+
+glm::vec3 LightRenderer::getColor() {
+	return color;
+}
+
+
