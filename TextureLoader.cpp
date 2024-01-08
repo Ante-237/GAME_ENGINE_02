@@ -14,6 +14,7 @@ TextureLoader::~TextureLoader() {
 GLuint TextureLoader::getTextureID(std::string texFileName) {
 	int width, height, channels;
 	stbi_uc* image = stbi_load(texFileName.c_str(), &width, &height, &channels, STBI_rgb);
+	printf("Current Height %d, Current Width %d, Number of Channels %d", height, width, channels);
 
 	GLuint mtextures;
 	glGenTextures(1, &mtextures);
